@@ -24,6 +24,27 @@ const obrasControl = {
     }
   },
 
+    // Lista todos os registros filtrando o artistas
+  getAllArtist: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const [rows] = await conn.query("SELECT * FROM obras WHERE status = 'on' AND artista_id = ?", [id]);
+      res.json({ data: rows });
+    } catch (error) {
+      res.json({ status: "error", message: error });
+    }
+  },
+
+  getAllMuseum: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const [rows] = await conn.query("SELECT * FROM obras WHERE status = 'on' AND museus_id = ?", [id]);
+      res.json({ data: rows });
+    } catch (error) {
+      res.json({ status: "error", message: error });
+    }
+  },
+
    // apaga um registro único pelo Id.
    delete: async (req, res) => {
     try {
