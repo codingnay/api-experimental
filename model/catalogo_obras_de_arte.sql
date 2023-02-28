@@ -32,20 +32,30 @@ CREATE TABLE administrator (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE movimento (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255),
+    periodo VARCHAR(255);
+);
+
+
 CREATE TABLE obras (
     id INT NOT NULL AUTO_INCREMENT,
     titulo VARCHAR(255) NOT NULL,
     tecnica VARCHAR(255),
-    dimensoes VARCHAR(255),
+    descricao VARCHAR(255),
     ano INT NOT NULL,
     imagem VARCHAR(255),
     artista_id INT NOT NULL,
-    museu_id INT NOT NULL,
+    museu_id INT,
+    movimento_id
     status ENUM('on', 'del') DEFAULT 'on',
     PRIMARY KEY (id),
     FOREIGN KEY (artista_id) REFERENCES artistas(id),
-    FOREIGN KEY (museu_id) REFERENCES museus(id)
+    FOREIGN KEY (museu_id) REFERENCES museus(id),
+    FOREIGN KEY (movimento_id) REFERENCES movimento(id)
 );
+
 
 INSERT INTO artistas (nome, nacionalidade, data_nascimento, data_falecimento)
 VALUES
@@ -63,11 +73,17 @@ INSERT INTO administrator (nome, email, senha)
 VALUES
 ('Admin', 'admin@example.com', '123456');
 
-INSERT INTO obras (titulo, tecnica, dimensoes, ano, imagem, artista_id, museu_id)
+INSERT INTO obras (titulo, tecnica, descricao, ano, imagem, artista_id, museu_id, movimento_id)
 VALUES
-('Mona Lisa', 'Óleo sobre madeira', '77 x 53 cm', 1503, 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcQ-FvbbAq5IaJUhtwxXEwY0D-jiZju02ejnNHx_bQWL_27GF3srhwJgqusMAqKh3QqU', 1, 1),
-('Noite Estrelada', 'Óleo sobre tela', '73,7 x 92,1 cm', 1889, 'https://arteeartistas.com.br/wp-content/uploads/2018/09/Noite-Estrelada.-Vincent-van-Gogh.jpg', 2, 2),
-('Guernica', 'Óleo sobre tela', '3,5 x 7,8 m', 1937, 'https://ogimg.infoglobo.com.br/in/21279652-caf-4b0/FT1086A/guernica_picasso.jpg', 3, 3);
+('Mona Lisa', 'Óleo sobre madeira', 'Sobre a mona lisa', 1503, 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcQ-FvbbAq5IaJUhtwxXEwY0D-jiZju02ejnNHx_bQWL_27GF3srhwJgqusMAqKh3QqU', 1, 1, 1),
+('Noite Estrelada', 'Óleo sobre tela', 'Sobre a noite estrelada', 1889, 'https://arteeartistas.com.br/wp-content/uploads/2018/09/Noite-Estrelada.-Vincent-van-Gogh.jpg', 2, 2, 2),
+('Guernica', 'Óleo sobre tela', 'Sobre o Guernica', 1937, 'https://ogimg.infoglobo.com.br/in/21279652-caf-4b0/FT1086A/guernica_picasso.jpg', 3, 3, 3);
+
+INSERT INTO movimento (nome, periodo) 
+VALUES
+('Renascimento','séculos XIV e XVI'),
+('Pós-impressionismo', 'século XIX e XX'),
+('Cubismo', 'anos de 1907 e 1914');
 
 -- Obras
 
@@ -87,10 +103,10 @@ SELECT * FROM obras WHERE status = 'on' AND museus_id = ?;
 UPDATE obras SET status = 'del' WHERE id = ?;
 
 -- Insere um novo registro - POST
-INSERT INTO obras (titulo, tecnica, dimensoes, ano, imagem, artista_id, museu_id) VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT INTO obras (titulo, tecnica, descricao, ano, imagem, artista_id, museu_id) VALUES (?, ?, ?, ?, ?, ?, ?);
 
 -- Edita uma obra - PUT
-UPDATE obras SET titulo = ?, tecnica = ?, dimensoes = ?, ano = ?, imagem = ?, artista_id = ?, museu_id = ?;
+UPDATE obras SET titulo = ?, tecnica = ?, descricao = ?, ano = ?, imagem = ?, artista_id = ?, museu_id = ?;
 
 
 -- Artistas

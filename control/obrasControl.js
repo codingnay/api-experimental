@@ -61,9 +61,9 @@ const obrasControl = {
    // Insere um novo registro.
    post: async (req, res) => {
     try {
-      const { titulo, descricao, dimensoes, imagem_url, data_criacao, status, movimento_id, tecnica_id, museu_id } = req.body;
-      const sql = "INSERT INTO obras (titulo, descricao, dimensoes, imagem_url, data_criacao, status, movimento_id, tecnica_id, museu_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      const [rows] = await conn.query(sql, [titulo, descricao, dimensoes, imagem_url, data_criacao, status, movimento_id, tecnica_id, museu_id]);
+      const {titulo, tecnica, descricao, ano, imagem, artista_id, museu_idd } = req.body;
+      const sql = "INSERT INTO obras (titulo, tecnica, descricao, ano, imagem, artista_id, museu_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      const [rows] = await conn.query(sql, [titulo, tecnica, descricao, ano, imagem, artista_id, museu_id]);
       res.json({ data: rows });
     } catch (error) {
       res.json({ status: "error", message: error });
@@ -73,10 +73,10 @@ const obrasControl = {
     // Edita o registro pelo Id.
     put: async (req, res) => {
         try {
-          const { titulo, descricao, dimensoes, imagem_url, data_criacao, status, movimento_id, tecnica_id, museu_id } = req.body;
+          const { titulo, tecnica, descricao, ano, imagem, artista_id, museu_id } = req.body;
           const { id } = req.params;
-          const sql = "UPDATE obras SET titulo = ?, descricao = ?, dimensoes = ?, imagem_url = ?, data_criacao = ?, status = ?, movimento_id = ?, tecnica_id = ?, museu_id =?"
-          const [rows] = await conn.query(sql, [titulo, descricao, dimensoes, imagem_url, data_criacao, status, movimento_id, tecnica_id, museu_id]);
+          const sql = "UPDATE obras SET titulo = ?, tecnica = ?, descricao = ?, ano = ?, imagem = ?, artista_id = ?, museu_id = ?"
+          const [rows] = await conn.query(sql, [titulo, tecnica, descricao, ano, imagem, artista_id, museu_id]);
           res.json({ data: rows });
         } catch (error) {
           res.json({ status: "error", message: error });

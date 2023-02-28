@@ -44,6 +44,13 @@ router.get("/museus/", museusControl.getAll);
 router.get("/museus/:id", museusControl.getOne);
 
 
+// Carrega o controller de 'movimento'.
+const movimentoControl = require('./movimentoControl');
+// Rotas para as requisições de 'movimento'.
+router.get("/movimento/", movimentoControl.getAll);
+router.get("/movimento/:id", movimentoControl.getOne);
+
+
 // Carrega o controller de 'admin'.
 const adminControl = require('./adminControl');
 // Rotas para as requisições de 'admin'.
